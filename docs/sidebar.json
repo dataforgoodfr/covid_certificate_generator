@@ -1,6 +1,6 @@
 {
   "covid_certificate_generator": {
     "Overview": "/",
-    "module name here": "core.html"
+    "covid_certificate_generator": "core.html"
   }
 }

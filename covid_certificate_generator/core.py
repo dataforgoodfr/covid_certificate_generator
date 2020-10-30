@@ -37,7 +37,7 @@ class PDF(FPDF):
         self.set_xy(0.0,0.0)
         self.set_font('Arial', 'B', 16)
         self.set_text_color(0, 0, 0)
-        self.cell(w=210.0, h=40.0, align='C', txt="JUSTIFICATIF DE DEPLACEMENT SCOLAIRE", border=0)
+        self.cell(w=210.0, h=40.0, align='C', txt=self.escape("JUSTIFICATIF DE DÉPLACEMENT SCOLAIRE"), border=0)
 
     def texte_parent(self, prenom_parent, nom_parent):
         self.set_xy(0.0,0.0)
@@ -114,7 +114,7 @@ def generate_one_attestation(prenom_parent, nom_parent, prenom_enfant, nom_enfan
 def generate(row):
     generate_one_attestation(row.PrenomParent, row.NomParent, row.PrenomEnfant, row.NomEnfant, row.DateNaissance, row.Moyen)
 
-df.apply(generate, axis=1)
+_ = df.apply(generate, axis=1)
 
 
 # Cell

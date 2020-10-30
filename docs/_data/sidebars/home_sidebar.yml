@@ -10,7 +10,7 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: module name here
+      title: covid_certificate_generator
       url: core.html
     output: web
     title: covid_certificate_generator
