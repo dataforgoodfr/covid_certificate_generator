@@ -2,9 +2,15 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {}
+index = {"df": "00_core.ipynb",
+         "PDF": "00_core.ipynb",
+         "generate_one_attestation": "00_core.ipynb",
+         "generate": "00_core.ipynb",
+         "pdf_w": "00_core.ipynb",
+         "pdf_h": "00_core.ipynb",
+         "pdf": "00_core.ipynb"}
 
-modules = []
+modules = ["core.py"]
 
 doc_url = "https://dataforgoodfr.github.io/covid_certificate_generator/"
 

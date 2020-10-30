@@ -1,3 +1,5 @@
 NomParent,PrenomParent,NomEnfant,PrenomEnfant,DateNaissance,Moyen
 NomParent1,PrenomParent1,NomEnfant1,PrenomEnfant1,12/06/2010,pied
 NomParent2,PrenomParent2,NomEnfant2,PrenomEnfant2,12/04/2011,pied
+NomParent3,PrenomParent3,NomEnfant3,PrenomEnfant3,12/04/2011,vélo
+NomParent4,PrenomParent4,NomEnfant4,"Prenom, Enfant4",12/04/2011,car
