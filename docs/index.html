@@ -32,6 +32,7 @@ nb_path: "index.ipynb"
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Afin de faciliter la gestion des justificatifs, ce projet propose un outil à destination des établissements scolaires et/ou des mairies pour générer en une fois toutes les attestations.</p>
+<p><img src="/covid_certificate_generator/./assets/gui.png" alt=""></p>
 <p>Il faut fournir à l'outil la liste des élèves :</p>
 <p><img src="/covid_certificate_generator/./assets/tableau.jpg" alt=""></p>
 <p>Ainsi que le cachet de l'établissement :</p>
@@ -46,15 +47,7 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Installation">Installation<a class="anchor-link" href="#Installation"> </a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><code>git clone git@github.com:dataforgoodfr/covid_certificate_generator.git</code></p>
-<p>Prochainement :</p>
-<p><code>pip install  covid_certificate_generator</code></p>
+<h2 id="Installation">Installation<a class="anchor-link" href="#Installation"> </a></h2><h3 id="Windows">Windows<a class="anchor-link" href="#Windows"> </a></h3><p>Télécharger l'application sur la page <a href="https://github.com/dataforgoodfr/covid_certificate_generator/releases">https://github.com/dataforgoodfr/covid_certificate_generator/releases</a></p>
 
 </div>
 </div>
@@ -67,11 +60,19 @@ nb_path: "index.ipynb"
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>Exécutez l'application : Une fenêtre noire va apparaître, c'est normal, l'application apparaîtra une dizaine de secondes plus tard :</p>
+<p><img src="/covid_certificate_generator/./assets/gui.png" alt=""></p>
+<p>Chargez le cachet de l'établissement scanné et le fichier des élèves dans un des formats suivants :</p>
 <ul>
-<li>Scannez le cachet de l'établissement scolaire et appelez-le <em>cachet.jpg</em></li>
-<li>Exportez la liste des élèves et appelez-la <em>data.csv</em></li>
-<li>Exécutez le programme :
-<code>python3 covid_certificate_generator/core.py</code></li>
+<li>CSV avec ";"</li>
+<li>CSV avec ","</li>
+<li>Excel 97-2003 (xls)</li>
+<li>Excel 2007-365 (xlsx)</li>
+</ul>
+<p>Les colonnes doivent être nommées de cette façon :</p>
+<ul>
+<li>NomParent     PrenomParent    NomEnfant   PrenomEnfant    DateNaissance   Moyen
+<img src="/covid_certificate_generator/./assets/excel.png" alt=""></li>
 </ul>
 
 </div>

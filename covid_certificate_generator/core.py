@@ -10,10 +10,6 @@ from fpdf import FPDF
 # Cell
 
 
-
-# Cell
-
-
 class PDF(FPDF):
     pdf_w=210
     pdf_h=297

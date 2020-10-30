@@ -4,6 +4,8 @@
 
 Afin de faciliter la gestion des justificatifs, ce projet propose un outil à destination des établissements scolaires et/ou des mairies pour générer en une fois toutes les attestations.
 
+![](assets/gui.png)
+
 Il faut fournir à l'outil la liste des élèves :
 
 ![](assets/tableau.jpg)
@@ -22,15 +24,22 @@ Un site web pour faciliter son usage sera développé prochainement.
 
 ## Installation
 
-`git clone git@github.com:dataforgoodfr/covid_certificate_generator.git`
+### Windows
+Télécharger l'application sur la page https://github.com/dataforgoodfr/covid_certificate_generator/releases
 
-Prochainement :
-
-`pip install  covid_certificate_generator`
 
 ## Utilisation
 
-- Scannez le cachet de l'établissement scolaire et appelez-le _cachet.jpg_
-- Exportez la liste des élèves et appelez-la _data.csv_
-- Exécutez le programme :
-`python3 covid_certificate_generator/core.py`
+Exécutez l'application : Une fenêtre noire va apparaître, c'est normal, l'application apparaîtra une dizaine de secondes plus tard :
+
+![](assets/gui.png)
+
+Chargez le cachet de l'établissement scanné et le fichier des élèves dans un des formats suivants :
+- CSV avec ";"
+- CSV avec ","
+- Excel 97-2003 (xls)
+- Excel 2007-365 (xlsx)
+
+Les colonnes doivent être nommées de cette façon :
+- NomParent 	PrenomParent 	NomEnfant 	PrenomEnfant 	DateNaissance 	Moyen
+![](assets/excel.png)
