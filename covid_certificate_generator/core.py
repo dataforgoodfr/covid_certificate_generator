@@ -129,7 +129,15 @@ class PDFGenerator:
 
 
     def get_pdf(self, output_name):
-        df = pd.read_csv(self.students_file)
+        if '.csv' in self.students_file:
+            # Assume that the user uploaded a CSV file
+            df = pd.read_csv(self.students_file)#      io.StringIO(decoded.decode('utf-8'))
+            if len(df.columns) == 1: # Very bad because we load it twice !
+                df = pd.read_csv(self.students_file, sep=';')
+        else:
+            # Assume that the user uploaded an excel file
+            df = pd.read_excel(self.students_file) #io.BytesIO(decoded)
+
         self.pdf = PDF(orientation='P', unit='mm', format='A4')
         self.pdf.set_author('Data For Good France')
         _ = df.apply(self.generate, axis=1)

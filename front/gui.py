@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 from covid_certificate_generator import core
-import os
+import os, sys
 
 # First the window layout in 2 columns
 
@@ -20,8 +20,8 @@ file_list_column = [
     ],
     [sg.Text('Etablissement :')],
     [sg.Text('Nom', size=(15, 1)), sg.InputText('Ecole Jean Jaurès', key='-NAME-')],
-    [sg.Text('Address', size=(15, 1)), sg.InputText('2 rue des Ecoles à Libreville', key='-ADDRESS-')],
-    [sg.Text('Ville', size=(15, 1)), sg.InputText('Libreville', key='-CITY-')],
+    [sg.Text('Addresse', size=(15, 1)), sg.InputText('2 rue des Ecoles à Libreville', key='-ADDRESS-')],
+    [sg.Text('Ville de signature', size=(15, 1)), sg.InputText('Libreville', key='-CITY-')],
 ]
 
 # For now will only show the name of the file that was chosen
@@ -34,7 +34,7 @@ image_viewer_column = [
     [sg.InputText('rien', visible=False, enable_events=True, key='file_path'),
     sg.FileSaveAs(file_types=(('PDF', '.pdf'),))],
     [sg.Button("Quitter")],
-    [sg.Text("Choose an image from list on left:")],
+    [sg.Text("Choose an image from list on left:", key="-LOG-")],
     [sg.Text(size=(40, 1), key="-TOUT-")],
     [sg.Image(key="-IMAGE-")],
 ]
@@ -74,26 +74,28 @@ while True:
     #         filename = os.path.join(
     #             values["-FOLDER-"], values["-FILE LIST-"][0]
     #         )
-    #         window["-TOUT-"].update(filename)
+    #         
     #         window["-IMAGE-"].update(filename=filename)
     #         print(filename)
     #     #except:
     #     #    pass
     elif event == "file_path":
         output_file = values['file_path']
-        try:
-            school={
-                'school_name':values["-NAME-"],
-                'school_adress':values["-ADDRESS-"],
-                'school_sign':cachet,
-                'city':values["-CITY-"]
-            }
-            #students_file = 'data.csv'
-            school_pdf = core.PDFGenerator(students_file, school)
-            school_pdf.get_pdf(output_file)
-            print("Genéré")
-        except:
-            print("ERROR", output_file)
+       # try:
+        school={
+            'school_name':values["-NAME-"],
+            'school_adress':values["-ADDRESS-"],
+            'school_sign':cachet,
+            'city':values["-CITY-"]
+        }
+        #students_file = 'data.csv'
+        school_pdf = core.PDFGenerator(students_file, school)
+        school_pdf.get_pdf(output_file)
+        print("Genéré")
+        # except:
+        #     error = f'Unexpected ERROR for {cachet} {output_file}: {sys.exc_info()[0]}'
+        #     window["-TOUT-"].update(error)
+        #     print(error)
 
 # layout = [[sg.Text("Hello from PySimpleGUI")],
 #     [sg.Button("Generer")],
