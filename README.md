@@ -1,8 +1,8 @@
-# Générateur de JUSTIFICATIF DE DÉPLACEMENT SCOLAIRE
-> Ce projet vise à générer les JUSTIFICATIF DE DÉPLACEMENT SCOLAIRE par les établissements scolaires à partir de la liste des élèves.
+# Générateur du JUSTIFICATIF DE DÉPLACEMENT SCOLAIRE
+> Ce projet vise à générer le JUSTIFICATIF DE DÉPLACEMENT SCOLAIRE par les établissements scolaires à partir de la liste des élèves.
 
 
-Afin de faciliter la gestion des justificatifs ce projet propose un outil à destination des établissements scolaires et/ou des mairies pour générer en une fois toutes les attestations.
+Afin de faciliter la gestion des justificatifs, ce projet propose un outil à destination des établissements scolaires et/ou des mairies pour générer en une fois toutes les attestations.
 
 Il faut fournir à l'outil la liste des élèves :
 
@@ -12,7 +12,7 @@ Ainsi que le cachet de l'établissement :
 
 ![](cachet.jpg)
 
-Ensuite il génére un PDF contenant toutes les attestations, qu'il est donc facile d'imprimer en une fois :
+Ensuite, le logiciel génére un PDF contenant toutes les attestations, qu'il est donc facile d'imprimer en une fois :
 
 ![](assets/pdf_view.png)
 
@@ -30,7 +30,7 @@ Prochainement :
 
 ## Utilisation
 
-- Scanner le cachet de l'établissement scolaire et appelez-le cachet.jpg
-- Exportez la liste des élèves et appelez-là data.csv
+- Scannez le cachet de l'établissement scolaire et appelez-le _cachet.jpg_
+- Exportez la liste des élèves et appelez-la _data.csv_
 - Exécutez le programme :
 `python3 covid_certificate_generator/core.py`

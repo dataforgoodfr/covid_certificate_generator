@@ -50,7 +50,7 @@ class PDF(FPDF):
 
         self.set_xy(self.margin_left,0.0)
         self.cell(w=10, h=110.0, align='L', txt=self.escape("Je soussigné(e),"), border=0)
-        texte = self.escape("Nom et prénom des parents, ou responsable de l'enfant dument identifié  :  ")
+        texte = self.escape("Nom et prénom des parents, ou responsable de l'enfant dûment identifié  :  ")
         self.cell(w=50, h=120, align='L', txt=texte, border=0)
         texte = self.escape(f"\t {prenom_parent} {nom_parent}")
         self.set_xy(self.margin_left*2,0.0)
