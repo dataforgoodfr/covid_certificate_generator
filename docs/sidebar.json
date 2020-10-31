@@ -1,6 +1,8 @@
 {
   "covid_certificate_generator": {
     "Overview": "/",
-    "covid_certificate_generator": "core.html"
+    "pdf_generator": "pdf_generator.html",
+    "pdf_helper": "pdf_helper.html",
+    "Title": "Untitled.html"
   }
 }

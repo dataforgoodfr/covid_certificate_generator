@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-from covid_certificate_generator import core
+from covid_certificate_generator import pdf_generator
 import os, sys
 
 file_list_column = [
@@ -68,7 +68,7 @@ while True:
                 'school_sign':cachet,
                 'city':values["-CITY-"]
             }
-            school_pdf = core.PDFGenerator(students_file, school)
+            school_pdf = pdf_generator.PDFGenerator(students_file, school)
             school_pdf.get_pdf(output_file)
             window["-TOUT-"].update("Génération terminée !")
         except:
