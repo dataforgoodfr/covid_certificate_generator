@@ -41,7 +41,7 @@ with left_column:
 
     st.write("Générez facilement un PDF avec toutes les attestations comme montré ci-dessous")
     st.image("assets/pdf_view.png")
-    st.write("#### 📧 Contact\nPour plus d'informations ou améliorer cet outil pour le rendre plus utile, contactez [Benoit Courty](mailto:benoit@courty.fr) par mail")
+    st.write("#### 📧 Contact\nPour plus d'informations ou améliorer cet outil pour le rendre plus utile, contactez [Benoit Courty](http://courty.fr/#contact_section) par mail")
     st.write("#### 🌎 Data For Good\nCet outil est construit à 100% par des bénévoles au sein de l'association [Data For Good](https://dataforgood.fr)")
 
 # Or even better, call Streamlit functions inside a "with" block:
