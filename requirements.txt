@@ -2,4 +2,5 @@ pandas
 fpdf
 xlrd
 PySimpleGUI
+streamlit
 # apt install python3-tk

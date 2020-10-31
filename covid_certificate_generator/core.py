@@ -14,6 +14,7 @@ class PDF(FPDF):
     pdf_w=210
     pdf_h=297
     margin_left = 20
+
     def escape(self, texte):
         return texte.encode('latin-1', 'replace').decode('latin-1')
 
@@ -24,6 +25,7 @@ class PDF(FPDF):
         self.rect(8.0, 8.0, 194.0,282.0,'FD')
 
     def imagex(self):
+        print("coucou")
         self.set_xy(6.0,6.0)
         self.image(sctplt,  link='', type='', w=1586/80, h=1920/80)
         self.set_xy(183.0,6.0)
@@ -124,7 +126,7 @@ class PDFGenerator:
         self.generate_one_attestation(row.PrenomParent, row.NomParent, row.PrenomEnfant, row.NomEnfant, row.DateNaissance, row.Moyen)
 
 
-    def get_pdf(self, output_name):
+    def get_pdf(self, output_name,return_object = False):
         if '.csv' in self.students_file:
             # Assume that the user uploaded a CSV file
             df = pd.read_csv(self.students_file)#      io.StringIO(decoded.decode('utf-8'))
@@ -137,4 +139,7 @@ class PDFGenerator:
         self.pdf = PDF(orientation='P', unit='mm', format='A4')
         self.pdf.set_author('Data For Good France')
         _ = df.apply(self.generate, axis=1)
-        _ = self.pdf.output(output_name,'F')
+        if return_object:
+            return self.pdf.output(output_name,"S")
+        else:
+            _ = self.pdf.output(output_name,'F')
