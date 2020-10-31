@@ -11,6 +11,7 @@ class PDF(FPDF):
     pdf_w=210
     pdf_h=297
     margin_left = 20
+
     def escape(self, texte):
         return texte.encode('latin-1', 'replace').decode('latin-1')
 
@@ -21,6 +22,7 @@ class PDF(FPDF):
         self.rect(8.0, 8.0, 194.0,282.0,'FD')
 
     def imagex(self):
+        print("coucou")
         self.set_xy(6.0,6.0)
         self.image(sctplt,  link='', type='', w=1586/80, h=1920/80)
         self.set_xy(183.0,6.0)
