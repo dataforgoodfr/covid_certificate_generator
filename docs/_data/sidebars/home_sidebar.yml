@@ -10,8 +10,11 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: covid_certificate_generator
-      url: core.html
+      title: pdf_generator
+      url: pdf_generator.html
+    - output: web,pdf
+      title: pdf_helper
+      url: pdf_helper.html
     output: web
     title: covid_certificate_generator
   output: web

@@ -2,10 +2,11 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"PDF": "00_core.ipynb",
-         "PDFGenerator": "00_core.ipynb"}
+index = {"PDFGenerator": "pdf_generator.ipynb",
+         "PDF": "pdf_helper.ipynb"}
 
-modules = ["core.py"]
+modules = ["pdf_generator.py",
+           "pdf_helper.py"]
 
 doc_url = "https://dataforgoodfr.github.io/covid_certificate_generator/"
 
