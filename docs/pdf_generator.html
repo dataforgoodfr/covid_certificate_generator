@@ -243,9 +243,9 @@ nb_path: "pdf_generator.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>/tmp/zltucl7f.pdf
-CPU times: user 10.5 ms, sys: 1.44 ms, total: 11.9 ms
-Wall time: 9.71 ms
+<pre>/tmp/9p7vgd8w.pdf
+CPU times: user 8.6 ms, sys: 6.98 ms, total: 15.6 ms
+Wall time: 14.8 ms
 </pre>
 </div>
 </div>
@@ -281,8 +281,8 @@ Wall time: 9.71 ms
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 6.67 ms, sys: 374 µs, total: 7.04 ms
-Wall time: 6.24 ms
+<pre>CPU times: user 7.42 ms, sys: 6.56 ms, total: 14 ms
+Wall time: 12.9 ms
 </pre>
 </div>
 </div>
@@ -293,214 +293,21 @@ Wall time: 6.24 ms
 </div>
     {% endraw %}
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">students_file</span> <span class="o">=</span> <span class="s1">&#39;./assets/Fichier des élèves.csv&#39;</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">students_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
- <span class="n">students_data</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">fh</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-<span class="nb">type</span><span class="p">(</span><span class="n">students_data</span><span class="p">)</span>
-<span class="n">copy</span> <span class="o">=</span> <span class="n">students_data</span>
-<span class="n">students_data</span><span class="o">.</span><span class="n">getbuffer</span><span class="p">()</span><span class="o">.</span><span class="n">nbytes</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">students_data</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">students_data</span><span class="o">.</span><span class="n">getbuffer</span><span class="p">()),</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>
-<span class="c1">#df</span>
-<span class="n">students_data</span><span class="o">.</span><span class="n">getbuffer</span><span class="p">()</span><span class="o">.</span><span class="n">nbytes</span>
-
-<span class="c1"># # Assume that the user uploaded a CSV file</span>
-<span class="c1"># df = pd.read_csv(copy)</span>
-<span class="c1"># if len(df.columns) == 1: # Is separator , ?</span>
-<span class="c1">#     df = pd.read_csv(students_data, sep=&#39;;&#39;)</span>
-<span class="c1">#     if len(df.columns) == 1: # Is separator , ?</span>
-<span class="c1">#         df = pd.read_csv(students_data, sep=&#39;\t&#39;)</span>
-<span class="n">df</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>_io.BytesIO</pre>
-</div>
-
-</div>
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>19824</pre>
-</div>
-
-</div>
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>19824</pre>
-</div>
-
-</div>
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>NomParent</th>
-      <th>PrenomParent</th>
-      <th>NomEnfant</th>
-      <th>PrenomEnfant</th>
-      <th>DateNaissance</th>
-      <th>Moyen</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>PIERRE</td>
-      <td>Pierre</td>
-      <td>PIERRE</td>
-      <td>Amande</td>
-      <td>30/09/12</td>
-      <td>Pied</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>PIERRET</td>
-      <td>Pierre</td>
-      <td>PIERRE</td>
-      <td>Amande</td>
-      <td>01/10/12</td>
-      <td>Pied</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>PIERRICk</td>
-      <td>Pierre</td>
-      <td>PIERRE</td>
-      <td>Amande</td>
-      <td>02/10/12</td>
-      <td>Pied</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>PIERREYY</td>
-      <td>Pierre</td>
-      <td>PIERRE</td>
-      <td>Amande</td>
-      <td>03/10/12</td>
-      <td>Pied</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>PIERRE 2</td>
-      <td>Pierre 2</td>
-      <td>PIERRE 2</td>
-      <td>Amande 2</td>
-      <td>04/10/12</td>
-      <td>Pied</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>338</th>
-      <td>PIERRE 336</td>
-      <td>Pierre 336</td>
-      <td>PIERRE 336</td>
-      <td>Amande 336</td>
-      <td>03/09/13</td>
-      <td>Pied</td>
-    </tr>
-    <tr>
-      <th>339</th>
-      <td>PIERRE 337</td>
-      <td>Pierre 337</td>
-      <td>PIERRE 337</td>
-      <td>Amande 337</td>
-      <td>04/09/13</td>
-      <td>Pied</td>
-    </tr>
-    <tr>
-      <th>340</th>
-      <td>PIERRE 338</td>
-      <td>Pierre 338</td>
-      <td>PIERRE 338</td>
-      <td>Amande 338</td>
-      <td>05/09/13</td>
-      <td>Pied</td>
-    </tr>
-    <tr>
-      <th>341</th>
-      <td>PIERRE 339</td>
-      <td>Pierre 339</td>
-      <td>PIERRE 339</td>
-      <td>Amande 339</td>
-      <td>06/09/13</td>
-      <td>Pied</td>
-    </tr>
-    <tr>
-      <th>342</th>
-      <td>PIERRE 340</td>
-      <td>Pierre 340</td>
-      <td>PIERRE 340</td>
-      <td>Amande 340</td>
-      <td>07/09/13</td>
-      <td>Pied</td>
-    </tr>
-  </tbody>
-</table>
-<p>343 rows × 6 columns</p>
-</div>
-</div>
-
-</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>From <a href="https://readxl.tidyverse.org/reference/excel_format.html">https://readxl.tidyverse.org/reference/excel_format.html</a></p>
+<p>File signatures (in hexadecimal) for xlsx vs xls:</p>
+<ul>
+<li>xlsx: First 4 bytes are 50 4B 03 04</li>
+<li>xls: First 8 bytes are D0 CF 11 E0 A1 B1 1A E1</li>
+<li>CSV : b'\xef\xbb\xbfNo'</li>
+<li>XLS : b'\xd0\xcf\x11\xe0\xa1'</li>
+<li>XLSX : b'PK\x03\x04\x14'</li>
+</ul>
 
 </div>
 </div>
-
 </div>
-    {% endraw %}
-
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -524,8 +331,8 @@ Wall time: 6.24 ms
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 109 ms, sys: 0 ns, total: 109 ms
-Wall time: 110 ms
+<pre>CPU times: user 110 ms, sys: 3.72 ms, total: 114 ms
+Wall time: 113 ms
 </pre>
 </div>
 </div>
@@ -559,8 +366,8 @@ Wall time: 110 ms
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 120 ms, sys: 1.48 ms, total: 121 ms
-Wall time: 123 ms
+<pre>CPU times: user 119 ms, sys: 2.46 ms, total: 121 ms
+Wall time: 120 ms
 </pre>
 </div>
 </div>
@@ -594,8 +401,8 @@ Wall time: 123 ms
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 148 ms, sys: 0 ns, total: 148 ms
-Wall time: 147 ms
+<pre>CPU times: user 146 ms, sys: 0 ns, total: 146 ms
+Wall time: 145 ms
 </pre>
 </div>
 </div>

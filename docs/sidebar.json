@@ -2,6 +2,7 @@
   "covid_certificate_generator": {
     "Overview": "/",
     "pdf_generator": "pdf_generator.html",
-    "pdf_helper": "pdf_helper.html"
+    "pdf_helper": "pdf_helper.html",
+    "Title": "Untitled.html"
   }
 }

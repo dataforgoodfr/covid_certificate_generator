@@ -25,9 +25,17 @@ class PDFGenerator:
         :param config_file: str, Path to config file
         :return:
         """
+
+    def get_temp_file(self, ext=None):
+        tmp_dir = tempfile._get_default_tempdir()
+        tmp_name = next(tempfile._get_candidate_names())
+        if ext:
+            return os.path.join(tmp_dir, tmp_name + ext)
+        else:
+            return os.path.join(tmp_dir, tmp_name)
+
     def generate_one_attestation(self, prenom_parent, nom_parent, prenom_enfant, nom_enfant, date_naissance, moyen):
         self.pdf.add_page()
-        #pdf.lines()
         self.pdf.titles()
         self.pdf.texte_parent(prenom_parent, nom_parent)
         self.pdf.texte_enfant(prenom_enfant, nom_enfant,date_naissance, moyen)
@@ -37,24 +45,36 @@ class PDFGenerator:
     def generate(self, row):
         self.generate_one_attestation(row.PrenomParent, row.NomParent, row.PrenomEnfant, row.NomEnfant, row.DateNaissance, row.Moyen)
 
-
-    def get_pdf(self, students_filename, students_data, school_sign, school):
-#         students_file = io.BytesIO(students_file)
+    def get_pdf(self, students_data, school_sign, school):
         self.school_sign = school_sign
         self.school = school
         try:
-            if '.csv' in students_filename:
-                # Assume that the user uploaded a CSV file
+            if isinstance(students_data, str) and len(students_data)<256:
+                with open(students_data, 'rb') as fh:
+                    students_data = io.BytesIO(fh.read())
+            header = students_data.read(3)
+            students_data.seek(0,0)
+            XLS = b'\xd0\xcf\x11'
+            XLSX = b'PK\x03'
+            CSV = b'\xef\xbb\xbf' # UTF-8 Unicode (with BOM) text
+            ascii_text = all(c > 60 and c < 128 for c in header)
+            if header == CSV or ascii_text:
+                #if '.csv' in students_filename:
+                # The user uploaded a CSV file
                 df = pd.read_csv(students_data)
                 if len(df.columns) == 1: # Is separator , ?
-                    df = pd.read_csv(io.BytesIO(students_data.getbuffer()), sep=';')
-                    if len(df.columns) == 1: # Is separator , ?
-                        df = pd.read_csv(io.BytesIO(students_data.getbuffer()), sep='\t')
+                    students_data.seek(0,0)
+                    df = pd.read_csv(students_data, sep=';')
+                    if len(df.columns) == 1: # Is separator \t ?
+                        students_data.seek(0,0)
+                        df = pd.read_csv(students_data, sep='\t')
+            elif header in (XLS, XLSX):
+                df = pd.read_excel(students_data)
             else:
                 # Assume that the user uploaded an excel file
-                df = pd.read_excel(students_data) #io.BytesIO(decoded)
+                df = pd.read_excel(students_data)
         except:
-            error = f'ERREUR à la lecture du fichier {students_filename}: {sys.exc_info()[0]}'
+            error = f'ERREUR à la lecture du fichier : {sys.exc_info()[0]}'
             print(error)
             raise
 
@@ -64,25 +84,23 @@ class PDFGenerator:
         self.pdf.set_author('Data For Good France')
         _ = df.apply(self.generate, axis=1)
 
-    def get_pdf_from_file(self, students_filename, school_sign, school, output_name):
+    def get_pdf_from_file(self, students_file, school_sign, school, output_name, return_object = False):
         # Read file
-        with open(students_filename, 'rb') as fh:
-            students_data = io.BytesIO(fh.read())
-        self.get_pdf(students_filename, students_data, school_sign, school)
-        _ = self.pdf.output(output_name,'F')
-
-    def get_temp_file(self, ext=None):
-        tmp_dir = tempfile._get_default_tempdir()
-        tmp_name = next(tempfile._get_candidate_names())
-        if ext:
-            return os.path.join(tmp_dir, tmp_name + ext)
+#         with open(students_file, 'rb') as fh:
+#             students_data = io.BytesIO(fh.read())
+        self.get_pdf(students_file, school_sign, school)
+        if return_object:
+            return self.pdf.output(output_name,"S")
         else:
-            return os.path.join(tmp_dir, tmp_name)
+            _ = self.pdf.output(output_name,'F')
+
     def get_pdf_from_BytesIO(self, students_filename, students_data, school_sign_filename, school_sign_data, school):
+        if len(school_sign_filename) < 2:
+            school_sign_filename = ''
         school_sign_filename = self.get_temp_file(school_sign_filename)
         with open(school_sign_filename, "wb") as f:
             f.write(school_sign_data.getbuffer())
-        self.get_pdf(students_filename, students_data, school_sign_filename, school)
+        self.get_pdf(students_data, school_sign_filename, school)
         output_name = self.get_temp_file('.pdf')
         _ = self.pdf.output(output_name,'F')
         # Clean temp file for school image
