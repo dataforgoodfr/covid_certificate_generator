@@ -12,7 +12,7 @@ import datetime
 # https://docs.streamlit.io/en/stable/api.html#lay-out-your-app
 # https://discuss.streamlit.io/t/amend-streamlits-default-colourway-like-on-the-spacy-streamlit-app/4184/10
 
-st.beta_set_page_config(
+st.set_page_config(
     page_title="Générateur de justificatifs",
     layout="wide",
     page_icon="streamlit_app/assets/favicon-32x32.png",
