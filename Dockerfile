@@ -15,4 +15,4 @@ EXPOSE 8501
 
 RUN pip install --no-cache-dir -r requirements.txt
 WORKDIR /opt/covid_certificate_generator
-CMD [ "streamlit", "run", "index.py"]
+CMD [ "streamlit", "run", "index.py", "--server.maxUploadSize", "10"]
