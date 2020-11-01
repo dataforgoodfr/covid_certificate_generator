@@ -4,6 +4,9 @@
 
 Afin de faciliter la gestion des justificatifs, ce projet propose un outil à destination des établissements scolaires et/ou des mairies pour générer en une fois toutes les attestations.
 
+Il est disponible en version web : https://justificatif.courty.fr/ (le plus facile à utiliser, les fichiers transitent sur Internet de façon sécurisé et ils ne sont pas stockées)
+
+Ou en version Windows (les fichiers ne quittent pas l'établissement) :
 ![](assets/gui.png)
 
 Il faut fournir à l'outil la liste des élèves :
@@ -20,7 +23,6 @@ Ensuite, le logiciel génére un PDF contenant toutes les attestations, qu'il es
 
 Exemple en PDF : https://raw.githubusercontent.com/dataforgoodfr/covid_certificate_generator/master/test.pdf
 
-Un site web pour faciliter son usage sera développé prochainement.
 
 ## Installation
 
