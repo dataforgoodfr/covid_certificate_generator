@@ -2,6 +2,7 @@ FROM python:3.7.0
 
 RUN apt-get update && apt-get upgrade -y && /usr/local/bin/python -m pip install --upgrade pip
 
+RUN mkdir -p /opt/covid_certificate_generator/logs
 WORKDIR /opt/covid_certificate_generator/
 COPY requirements.txt .
 COPY index.py .
