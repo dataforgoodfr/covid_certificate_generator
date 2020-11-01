@@ -10,12 +10,16 @@ from covid_certificate_generator import pdf_helper
 import io, sys, os
 import tempfile
 import pathlib
+import logging
+import time
 
 # Cell
 class PDFGenerator:
     config = None # Dict configuration
     school = None
     school_sign = None
+    logger = None
+    num_pages = 0
     pdf_w=210
     pdf_h=297
 
@@ -25,6 +29,17 @@ class PDFGenerator:
         :param config_file: str, Path to config file
         :return:
         """
+        logger = logging.getLogger("download")
+        formatter = logging.Formatter("%(asctime)s -  %(name)-12s %(levelname)-8s %(message)s")
+        logger.setLevel(logging.DEBUG)
+        log_file = f"./logs/pdf_generator-{datetime.datetime.today().strftime('%Y-%m-%d')}.log"
+        fh = logging.FileHandler(log_file)
+        fh.setLevel(logging.DEBUG)
+        fh.setFormatter(formatter)
+        logger.addHandler(fh) # Output to file
+        logger.addHandler(logging.StreamHandler()) # And to console
+        self.logger = logger
+        #logger.info(f'Starting...')
 
     def get_temp_file(self, ext=None):
         tmp_dir = tempfile._get_default_tempdir()
@@ -46,6 +61,7 @@ class PDFGenerator:
         self.generate_one_attestation(row.PrenomParent, row.NomParent, row.PrenomEnfant, row.NomEnfant, row.DateNaissance, row.Moyen)
 
     def get_pdf(self, students_data, school_sign, school):
+
         self.school_sign = school_sign
         self.school = school
         try:
@@ -75,7 +91,7 @@ class PDFGenerator:
                 df = pd.read_excel(students_data)
         except:
             error = f'ERREUR à la lecture du fichier : {sys.exc_info()[0]}'
-            print(error)
+            self.logger.error(error)
             raise
 
         if len(df.columns) < 6:
@@ -83,18 +99,29 @@ class PDFGenerator:
         self.pdf = pdf_helper.PDF(orientation='P', unit='mm', format='A4')
         self.pdf.set_author('Data For Good France')
         _ = df.apply(self.generate, axis=1)
+        self.num_pages = len(df)
+
 
     def get_pdf_from_file(self, students_file, school_sign, school, output_name, return_object = False):
+        start_time = time.time()
+        self.logger.debug(f"Starting get_pdf_from_file for {school['school_name']}")
         # Read file
 #         with open(students_file, 'rb') as fh:
 #             students_data = io.BytesIO(fh.read())
         self.get_pdf(students_file, school_sign, school)
+
         if return_object:
-            return self.pdf.output(output_name,"S")
+            result = self.pdf.output(output_name,"S")
         else:
             _ = self.pdf.output(output_name,'F')
+            result = None
+        exec_time = f'Execution time for {self.num_pages} pages: {round(time.time() - start_time, 3)} second(s).'
+        self.logger.info(exec_time)
+        return result
 
     def get_pdf_from_BytesIO(self, students_filename, students_data, school_sign_filename, school_sign_data, school):
+        start_time = time.time()
+        self.logger.debug(f'Starting get_pdf_from_BytesIO...')
         if len(school_sign_filename) < 2:
             school_sign_filename = ''
         school_sign_filename = self.get_temp_file(school_sign_filename)
@@ -106,5 +133,7 @@ class PDFGenerator:
         # Clean temp file for school image
         path = pathlib.Path(school_sign_filename)
         path.unlink()
+        exec_time = f'Execution time for {self.num_pages} pages: {round(time.time() - start_time, 3)} second(s).'
+        self.logger.info(exec_time)
         return output_name
         #return self.pdf.output(dest='I')

@@ -18,7 +18,7 @@ st.set_page_config(
     page_icon="streamlit_app/assets/favicon-32x32.png",
 
 )
-    
+
 with open("streamlit_app/navbar-bootstrap.html","r") as navbar:
     st.markdown(navbar.read(),unsafe_allow_html=True)
 
@@ -49,12 +49,13 @@ with right_column:
     st.write("## Générateur de justificatifs dérogatoire de déplacement scolaire")
     st.write("**1. Pré-requis** : préparez un fichier excel avec les informations des élèves suivantes (respectez bien le nom des colonnes)")
     st.image("assets/excel.png")
+    st.write("Note RGPD : Vous devez avoir obtenu le consentement des personnes pour ce traitement. Les informations vont transiter sur internet de façon sécurisée (https) et le fichier des élèves ne sera pas stocké.")
     st.write("**2. Remplissez à présent le formulaire suivant** pour ajouter les informations de l'établissement")
 
 
     students_file = st.file_uploader("Fichier excel ou csv avec la liste des élèves inscrite comme ci-dessus",type=["xls","csv","xlsx"])
     school_name = st.text_input("Nom de l'établissement scolaire")
-    school_address = st.text_input("Addresse de l'établissement scolaire")
+    school_address = st.text_input("Adresse de l'établissement scolaire")
     school_city = st.text_input("Ville de signature")
     school_sign = st.file_uploader("Cachet de l'établissement",type=["png","jpg","jpeg"])
 
@@ -78,7 +79,7 @@ with right_column:
             }
 
             school_pdf = pdf_generator.PDFGenerator()
-            print(type(students_file))
+            #print(type(students_file))
             school_pdf_str = base64.b64encode(
                 school_pdf.get_pdf_from_file(students_file, school_sign, school, output_name=school_pdf.get_temp_file(), return_object = True)
             )
@@ -88,7 +89,5 @@ with right_column:
             if school_pdf_str is not None:
                 st.markdown(f'<a download="Justificatifs_{today}.pdf" target="_blank" href="data:application/pdf;base64,{school_pdf_str.decode()}"><b>Télécharger le fichier en cliquant ici !</a>',unsafe_allow_html = True)
 
-
-
     else:
-        st.warning("Le formulaire doit être rempli entièrement avant de pouvoir générer le Fichier")
+        st.warning("Le formulaire doit être rempli entièrement avant de pouvoir générer le fichier")

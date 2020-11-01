@@ -10,7 +10,7 @@ from fpdf import FPDF
 class PDF(FPDF):
     pdf_w=210
     pdf_h=297
-    margin_left = 20
+    margin_left = 10
 
     def escape(self, texte):
         return texte.encode('latin-1', 'replace').decode('latin-1')
@@ -28,49 +28,57 @@ class PDF(FPDF):
         self.image(sctplt2,  link='', type='', w=1586/80, h=1920/80)
 
     def titles(self):
-        self.set_xy(0.0,0.0)
+        self.set_xy(0.0,5.0)
         self.set_font('Arial', 'B', 16)
         self.set_text_color(0, 0, 0)
         self.cell(w=210.0, h=40.0, align='C', txt=self.escape("JUSTIFICATIF DE DÉPLACEMENT SCOLAIRE"), border=0)
 
     def texte_parent(self, prenom_parent, nom_parent):
-        self.set_xy(0.0,0.0)
-        self.set_font('Arial', 'B', 10)
+        self.set_xy(self.margin_left,40.0)
+        self.set_font('Arial', 'B', 12)
         self.set_text_color(0, 0, 0)
         texte = self.escape("En application des mesures générales nécessaires pour faire face à l'épidémie de covid-19")
-        self.cell(w=self.pdf_w, h=80, align='C', txt=texte, border=0)
-        self.set_xy(0.0,0.0)
-        texte = self.escape("dans le cadre de l’état d’urgence sanitaire.")
+        self.cell(w=0, h=0, align='L', txt=texte, border=0)
+        self.set_xy(self.margin_left,46)
+        texte = self.escape("dans le cadre de l'état d'urgence sanitaire")
+        self.cell(w=0, h=0, align='L', txt=texte, border=0)
 
-        self.set_xy(self.margin_left,0.0)
-        self.cell(w=10, h=110.0, align='L', txt=self.escape("Je soussigné(e),"), border=0)
+        top = 70
+        self.set_xy(self.margin_left,top)
+        self.cell(w=0, h=0, align='L', txt=self.escape("Je soussigné(e),"), border=0)
+        self.set_xy(self.margin_left*2,top+10)
         texte = self.escape("Nom et prénom des parents, ou responsable de l'enfant dûment identifié  :  ")
-        self.cell(w=50, h=120, align='L', txt=texte, border=0)
-        texte = self.escape(f"\t {prenom_parent} {nom_parent}")
-        self.set_xy(self.margin_left*2,0.0)
-        self.cell(w=0, h=130, align='L', txt=texte, border=0)
+        self.cell(w=0, h=0, align='L', txt=texte, border=0)
+        self.set_xy(self.margin_left*2,top+20)
+        texte = self.escape(f"{prenom_parent} {nom_parent}")
+        self.cell(w=0, h=0, align='L', txt=texte, border=0)
 
     def texte_enfant(self, prenom_enfant, nom_enfant, date_naissance, moyen):
-        self.set_xy(self.margin_left, 130.0)
-        self.set_font('Arial', 'B', 10)
+        top = 120
+        self.set_xy(self.margin_left, top-7)
+        self.set_font('Arial', 'B', 12)
         self.set_text_color(0, 0, 0)
-        texte = self.escape("certifie le caractère indispensable de mes déplacements, entre mon domicile et le lieu d'accueil de l'enfant :")
+        texte = self.escape("certifie le caractère indispensable de mes déplacements, entre mon domicile et le lieu ")
         self.cell(w=0, h=0, align='L', txt=texte, border=0)
-        self.set_xy(self.margin_left,140)
+        self.set_xy(self.margin_left, top-1)
+        texte = self.escape("d'accueil de l'enfant :")
+        self.cell(w=0, h=0, align='L', txt=texte, border=0)
+        self.set_xy(self.margin_left*2,top+10)
         texte = self.escape(f"Nom : {nom_enfant}")
         self.cell(w=0, h=0, align='L', txt=texte, border=0)
-        self.set_xy(self.margin_left,150)
+        self.set_xy(self.margin_left*2,top+20)
         texte = self.escape(f"Prénom : {prenom_enfant}")
         self.cell(w=0, h=0, align='L', txt=texte, border=0)
-        self.set_xy(self.margin_left,160)
+        self.set_xy(self.margin_left*2,top+30)
         texte = self.escape(f"Date de naissance : {date_naissance}")
         self.cell(w=0, h=0, align='L', txt=texte, border=0)
-        self.set_xy(self.margin_left,165)
+        self.set_xy(self.margin_left*2,top+40)
         texte = self.escape(f"Moyen de déplacement : {moyen}")
         self.cell(w=0, h=0, align='L', txt=texte, border=0)
 
     def texte_etablissement(self, nom_etap, adresse_etab, cachet, ville):
         top = 180
+        self.set_font('Arial', 'B', 12)
         self.set_xy(self.margin_left,top)
         texte = self.escape(f"Nom de l'établissement : {nom_etap}")
         self.cell(w=0, h=0, align='L', txt=texte, border=0)
@@ -81,6 +89,6 @@ class PDF(FPDF):
         texte = self.escape(f"Fait à : {ville}")
         self.cell(w=0, h=0, align='L', txt=texte, border=0)
         self.set_xy(self.margin_left,top+30)
-        texte = self.escape(f"Le : {datetime.datetime.today().strftime('%Y-%m-%d')}")
+        texte = self.escape(f"Le : {datetime.datetime.today().strftime('%d/%m/%Y')}")
         self.cell(w=0, h=0, align='L', txt=texte, border=0)
-        self.image(cachet, x=self.margin_left*2, y=top+50, w=100)
+        self.image(cachet, x=self.pdf_w/2-100/2, y=top+30, w=100)
