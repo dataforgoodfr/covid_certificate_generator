@@ -1,6 +1,6 @@
 pandas
-fpdf2
-xlrd
+fpdf2 # to deal with bytes in PDF
+xlrd # For Excel file in Pandas
 PySimpleGUI
 streamlit
 # apt install python3-tk

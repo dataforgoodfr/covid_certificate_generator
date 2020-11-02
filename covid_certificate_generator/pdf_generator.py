@@ -5,13 +5,13 @@ __all__ = ['PDFGenerator']
 # Cell
 import datetime
 import pandas as pd
-#from fpdf import FPDF
 from covid_certificate_generator import pdf_helper
 import io, sys, os
 import tempfile
 import pathlib
 import logging
 import time
+import base64
 
 # Cell
 class PDFGenerator:
@@ -23,20 +23,23 @@ class PDFGenerator:
     pdf_w=210
     pdf_h=297
 
-    def __init__(self, config_file=None):
+    def __init__(self):
         """
         Constructor
-        :param config_file: str, Path to config file
+        :param: None
         :return:
         """
         logger = logging.getLogger("download")
         formatter = logging.Formatter("%(asctime)s -  %(name)-12s %(levelname)-8s %(message)s")
         logger.setLevel(logging.DEBUG)
-        log_file = f"./logs/pdf_generator-{datetime.datetime.today().strftime('%Y-%m-%d')}.log"
-        fh = logging.FileHandler(log_file)
-        fh.setLevel(logging.DEBUG)
-        fh.setFormatter(formatter)
-        logger.addHandler(fh) # Output to file
+        # If the log directory exist we write to it
+        # We do not create it if not exist as in AWS Lambda we don't whant to do it
+        if os.path.exists("./logs/"):
+            log_file = f"./logs/pdf_generator-{datetime.datetime.today().strftime('%Y-%m-%d')}.log"
+            fh = logging.FileHandler(log_file)
+            fh.setLevel(logging.DEBUG)
+            fh.setFormatter(formatter)
+            logger.addHandler(fh) # Output to file
         logger.addHandler(logging.StreamHandler()) # And to console
         self.logger = logger
         #logger.info(f'Starting...')
@@ -119,21 +122,44 @@ class PDFGenerator:
         self.logger.info(exec_time)
         return result
 
-    def get_pdf_from_BytesIO(self, students_filename, students_data, school_sign_filename, school_sign_data, school):
+    def encode_to_text(self, byte_content):
+        # Thanks to https://stackoverflow.com/questions/37225035/serialize-in-json-a-base64-encoded-data
+        ENCODING = 'utf-8'
+        # base64 encode read data
+        # result: bytes (again)
+        base64_bytes = base64.b64encode(byte_content)
+        # tdecode these bytes to text
+        # result: string (in utf-8)
+        base64_string = base64_bytes.decode(ENCODING)
+        return base64_string
+
+    def decode_to_byte(self, text_content):
+        ENCODING = 'utf-8'
+        decoded = base64.b64decode(text_content)
+        return io.BytesIO(decoded)
+        #return io.BytesIO(base64.b64decode(text_content).decode(ENCODING))
+
+    def get_pdf_from_json_payload(self, json_payload):
         start_time = time.time()
         self.logger.debug(f'Starting get_pdf_from_BytesIO...')
-        if len(school_sign_filename) < 2:
-            school_sign_filename = ''
-        school_sign_filename = self.get_temp_file(school_sign_filename)
-        with open(school_sign_filename, "wb") as f:
-            f.write(school_sign_data.getbuffer())
-        self.get_pdf(students_data, school_sign_filename, school)
-        output_name = self.get_temp_file('.pdf')
-        _ = self.pdf.output(output_name,'F')
-        # Clean temp file for school image
-        path = pathlib.Path(school_sign_filename)
-        path.unlink()
+        students_data = json_payload['students_file']
+        students_data = self.decode_to_byte(students_data)
+        school_sign_data = json_payload['school_sign']
+        school_sign_data = self.decode_to_byte(school_sign_data)
+        school = json_payload['school']
+#         if len(school_sign_filename) < 2:
+#             school_sign_filename = ''
+#         school_sign_filename = self.get_temp_file(school_sign_filename)
+#         with open(school_sign_filename, "wb") as f:
+#             f.write(school_sign_data.getbuffer())
+#         self.get_pdf(students_data, school_sign_filename, school)
+        self.get_pdf(students_data, school_sign_data, school)
+#         output_name = self.get_temp_file('.pdf')
+#         _ = self.pdf.output(output_name,'F')
+#         # Clean temp file for school image
+#         path = pathlib.Path(school_sign_filename)
+#         path.unlink()
         exec_time = f'Execution time for {self.num_pages} pages: {round(time.time() - start_time, 3)} second(s).'
         self.logger.info(exec_time)
-        return output_name
+        return self.pdf.output(None,"S")
         #return self.pdf.output(dest='I')
