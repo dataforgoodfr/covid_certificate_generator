@@ -4,7 +4,7 @@ __all__ = ['PDF']
 
 # Cell
 import datetime
-from fpdf import FPDF
+from fpdf import FPDF # WARNING : we really use FDF2 to deal with bytes
 
 # Cell
 class PDF(FPDF):
